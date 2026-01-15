@@ -1,20 +1,35 @@
 ---
 name: Git Commit Helper
-description: Generate clear, conventional Git commit messages by analyzing git diffs or staged changes. Tool-agnostic and reusable across editors and AI coding assistants.
+description: Generate clear, conventional Git commit messages by analyzing staged Git changes only. Tool-agnostic and reusable across editors and AI coding assistants.
 ---
 
 # Git Commit Helper
 
 ## Purpose
 
-Analyze Git changes and generate **high-quality commit messages** following the **Conventional Commits** standard.
+Analyze **staged Git changes only** and generate **high-quality commit messages**
+following the **Conventional Commits** standard.
 
 This skill is **universal** and designed to work with:
 
 - VS Code Copilot / Copilot Chat
 - Antigravity
 - CLI-based AI agents
-- Any editor or workflow that can access `git diff`
+- Any editor or workflow that can access `git diff --staged`
+
+---
+
+## Scope Assumption
+
+This guide assumes commit messages are written
+based on changes visible in `git diff --staged`.
+
+Changes that are not staged — including unstaged
+or untracked files — are considered outside the
+scope of the commit description.
+
+As a result, commit messages focus only on files
+and modifications that appear in the staged diff.
 
 ---
 
@@ -23,7 +38,7 @@ This skill is **universal** and designed to work with:
 Use this skill when:
 
 - Writing a commit message
-- Reviewing staged changes before committing
+- Reviewing **staged** changes before committing
 - Enforcing Conventional Commits
 - Improving long-term Git history quality
 
@@ -31,15 +46,16 @@ Use this skill when:
 
 ## Expected Input
 
-The assistant may analyze one or more of:
+The assistant should prefer inputs in the following order:
 
-- `git diff --staged`
-- `git diff`
-- `git status`
-- `git diff --stat`
-- A pasted diff or patch
+1. `git diff --staged`
+2. `git diff` (only if explicitly stated that all changes will be committed)
+3. A pasted staged diff or patch
 
-If no diff is provided, infer intent from context and ask for clarification only if necessary.
+The assistant must **ignore**:
+- `git status` untracked files
+
+If no staged diff is provided, ask for clarification **before** generating a commit message.
 
 ---
 
@@ -77,18 +93,19 @@ If no diff is provided, infer intent from context and ask for clarification only
 - ≤ 50 characters
 - Capitalized first letter
 - No trailing period
+- Must match **staged changes exactly**
 
 ### Body
 
-- Explain **why** the change exists
-- Describe impact or behavior changes
+- Explain **why** the staged change exists
+- Describe behavior or structural impact
 - Prefer bullet points
-- Avoid repeating the summary
+- Do **not** mention unstaged or future work
 
 ### Footer
 
 - Reference issues: `Refs #123`, `Closes #456`
-- Declare breaking changes
+- Declare breaking changes if applicable
 
 ---
 
@@ -123,7 +140,7 @@ refactor(db): simplify query construction
 
 ---
 
-## Multi-file Changes
+## Multi-file Changes (Staged Only)
 
 ```
 refactor(core): restructure authentication module
@@ -171,7 +188,8 @@ git commit --amend --no-edit
 ## Best Practices
 
 - One logical change per commit
-- Avoid vague summaries
+- Commit message must match `git show`
+- If a file is not in `git show`, it must not be mentioned
 - Prefer small, focused commits
 - Write for future maintainers
 
@@ -179,6 +197,7 @@ git commit --amend --no-edit
 
 ## Checklist
 
+- [ ] Only staged files are described
 - [ ] Correct type
 - [ ] Clear scope
 - [ ] Imperative summary
