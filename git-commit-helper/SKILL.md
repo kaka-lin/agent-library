@@ -1,209 +1,187 @@
 ---
 name: Git Commit Helper
-description: Generate descriptive commit messages by analyzing git diffs. Use when the user asks for help writing commit messages or reviewing staged changes.
-hooks:
-  PostToolUse:
-    - matcher: "Bash"
-      hooks:
-        - type: command
-          command: "echo \"[$(date)] Git Commit Helper: Analyzed git diff for commit message\" >> ~/.claude/git-commit-helper.log"
+description: Generate clear, conventional Git commit messages by analyzing git diffs or staged changes. Tool-agnostic and reusable across editors and AI coding assistants.
 ---
 
 # Git Commit Helper
 
-## Quick start
+## Purpose
 
-Analyze staged changes and generate commit message:
+Analyze Git changes and generate **high-quality commit messages** following the **Conventional Commits** standard.
 
-```bash
-# View staged changes
-git diff --staged
+This skill is **universal** and designed to work with:
 
-# Generate commit message based on changes
-# (Claude will analyze the diff and suggest a message)
+- VS Code Copilot / Copilot Chat
+- Antigravity
+- CLI-based AI agents
+- Any editor or workflow that can access `git diff`
+
+---
+
+## When to Use
+
+Use this skill when:
+
+- Writing a commit message
+- Reviewing staged changes before committing
+- Enforcing Conventional Commits
+- Improving long-term Git history quality
+
+---
+
+## Expected Input
+
+The assistant may analyze one or more of:
+
+- `git diff --staged`
+- `git diff`
+- `git status`
+- `git diff --stat`
+- A pasted diff or patch
+
+If no diff is provided, infer intent from context and ask for clarification only if necessary.
+
+---
+
+## Output Format
+
 ```
-
-## Commit message format
-
-Follow conventional commits format:
-
-```
-<type>(<scope>): <description>
+<type>(<scope>): <short description>
 
 [optional body]
 
 [optional footer]
 ```
 
-### Types
+---
 
-- **feat**: New feature
-- **fix**: Bug fix
-- **docs**: Documentation changes
-- **style**: Code style changes (formatting, missing semicolons)
-- **refactor**: Code refactoring
-- **test**: Adding or updating tests
-- **chore**: Maintenance tasks
+## Commit Types
 
-### Examples
+| Type     | Meaning |
+|----------|--------|
+| feat     | New feature |
+| fix      | Bug fix |
+| docs     | Documentation |
+| style    | Formatting / lint (no logic change) |
+| refactor | Refactor without behavior change |
+| test     | Add or update tests |
+| chore    | Maintenance / tooling / CI |
 
-**Feature commit:**
+---
+
+## Writing Rules
+
+### Summary Line
+
+- Imperative mood (`add`, `fix`, `remove`)
+- ≤ 50 characters
+- Capitalized first letter
+- No trailing period
+
+### Body
+
+- Explain **why** the change exists
+- Describe impact or behavior changes
+- Prefer bullet points
+- Avoid repeating the summary
+
+### Footer
+
+- Reference issues: `Refs #123`, `Closes #456`
+- Declare breaking changes
+
+---
+
+## Examples
+
+### Feature
+
 ```
 feat(auth): add JWT authentication
 
-Implement JWT-based authentication system with:
-- Login endpoint with token generation
-- Token validation middleware
-- Refresh token support
+- Implement token-based login
+- Add token validation middleware
+- Support refresh tokens
 ```
 
-**Bug fix:**
-```
-fix(api): handle null values in user profile
+### Bug Fix
 
-Prevent crashes when user profile fields are null.
-Add null checks before accessing nested properties.
 ```
+fix(api): prevent crash on null profile data
 
-**Refactor:**
-```
-refactor(database): simplify query builder
-
-Extract common query patterns into reusable functions.
-Reduce code duplication in database layer.
+Add null checks before accessing nested fields.
 ```
 
-## Analyzing changes
+### Refactor
 
-Review what's being committed:
+```
+refactor(db): simplify query construction
 
-```bash
-# Show files changed
-git status
-
-# Show detailed changes
-git diff --staged
-
-# Show statistics
-git diff --staged --stat
-
-# Show changes for specific file
-git diff --staged path/to/file
+- Extract shared query logic
+- Reduce duplication
 ```
 
-## Commit message guidelines
+---
 
-**DO:**
-- Use imperative mood ("add feature" not "added feature")
-- Keep first line under 50 characters
-- Capitalize first letter
-- No period at end of summary
-- Explain WHY not just WHAT in body
-
-**DON'T:**
-- Use vague messages like "update" or "fix stuff"
-- Include technical implementation details in summary
-- Write paragraphs in summary line
-- Use past tense
-
-## Multi-file commits
-
-When committing multiple related changes:
+## Multi-file Changes
 
 ```
 refactor(core): restructure authentication module
 
-- Move auth logic from controllers to service layer
-- Extract validation into separate validators
-- Update tests to use new structure
-- Add integration tests for auth flow
+- Move logic into service layer
+- Extract validators
+- Update related tests
 
-Breaking change: Auth service now requires config object
+BREAKING CHANGE: Auth service now requires a config object
 ```
 
-## Scope examples
+---
 
-**Frontend:**
-- `feat(ui): add loading spinner to dashboard`
-- `fix(form): validate email format`
-
-**Backend:**
-- `feat(api): add user profile endpoint`
-- `fix(db): resolve connection pool leak`
-
-**Infrastructure:**
-- `chore(ci): update Node version to 20`
-- `feat(docker): add multi-stage build`
-
-## Breaking changes
-
-Indicate breaking changes clearly:
+## Breaking Changes
 
 ```
-feat(api)!: restructure API response format
+feat(api)!: change response format
 
-BREAKING CHANGE: All API responses now follow JSON:API spec
-
-Previous format:
-{ "data": {...}, "status": "ok" }
-
-New format:
-{ "data": {...}, "meta": {...} }
-
-Migration guide: Update client code to handle new response structure
+BREAKING CHANGE:
+Responses now follow JSON:API specification.
 ```
 
-## Template workflow
+---
 
-1. **Review changes**: `git diff --staged`
-2. **Identify type**: Is it feat, fix, refactor, etc.?
-3. **Determine scope**: What part of the codebase?
-4. **Write summary**: Brief, imperative description
-5. **Add body**: Explain why and what impact
-6. **Note breaking changes**: If applicable
-
-## Interactive commit helper
-
-Use `git add -p` for selective staging:
+## Recommended Workflow
 
 ```bash
-# Stage changes interactively
 git add -p
-
-# Review what's staged
 git diff --staged
-
-# Commit with message
 git commit -m "type(scope): description"
 ```
 
-## Amending commits
+---
 
-Fix the last commit message:
+## Amend Commits
 
 ```bash
-# Amend commit message only
 git commit --amend
-
-# Amend and add more changes
-git add forgotten-file.js
+git add forgotten-file
 git commit --amend --no-edit
 ```
 
-## Best practices
+---
 
-1. **Atomic commits** - One logical change per commit
-2. **Test before commit** - Ensure code works
-3. **Reference issues** - Include issue numbers if applicable
-4. **Keep it focused** - Don't mix unrelated changes
-5. **Write for humans** - Future you will read this
+## Best Practices
 
-## Commit message checklist
+- One logical change per commit
+- Avoid vague summaries
+- Prefer small, focused commits
+- Write for future maintainers
 
-- [ ] Type is appropriate (feat/fix/docs/etc.)
-- [ ] Scope is specific and clear
-- [ ] Summary is under 50 characters
-- [ ] Summary uses imperative mood
-- [ ] Body explains WHY not just WHAT
-- [ ] Breaking changes are clearly marked
-- [ ] Related issue numbers are included
+---
+
+## Checklist
+
+- [ ] Correct type
+- [ ] Clear scope
+- [ ] Imperative summary
+- [ ] ≤ 50 characters
+- [ ] Body explains why
+- [ ] Breaking changes marked
