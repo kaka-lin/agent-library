@@ -1,5 +1,5 @@
 ---
-name: Git Commit Helper
+name: git-commit-helper
 description: Generate clear, conventional Git commit messages by analyzing staged Git changes only. Tool-agnostic and reusable across editors and AI coding assistants.
 ---
 
@@ -53,6 +53,7 @@ The assistant should prefer inputs in the following order:
 3. A pasted staged diff or patch
 
 The assistant must **ignore**:
+
 - `git status` untracked files
 
 If no staged diff is provided, ask for clarification **before** generating a commit message.
@@ -61,7 +62,7 @@ If no staged diff is provided, ask for clarification **before** generating a com
 
 ## Output Format
 
-```
+```text
 <type>(<scope>): <short description>
 
 [optional body]
@@ -73,15 +74,15 @@ If no staged diff is provided, ask for clarification **before** generating a com
 
 ## Commit Types
 
-| Type     | Meaning |
-|----------|--------|
-| feat     | New feature |
-| fix      | Bug fix |
-| docs     | Documentation |
-| style    | Formatting / lint (no logic change) |
-| refactor | Refactor without behavior change |
-| test     | Add or update tests |
-| chore    | Maintenance / tooling / CI |
+| Type     | Meaning                              |
+|----------|--------------------------------------|
+| feat     | New feature                          |
+| fix      | Bug fix                              |
+| docs     | Documentation                        |
+| style    | Formatting / lint (no logic change)  |
+| refactor | Refactor without behavior change     |
+| test     | Add or update tests                  |
+| chore    | Maintenance / tooling / CI           |
 
 ---
 
@@ -113,7 +114,7 @@ If no staged diff is provided, ask for clarification **before** generating a com
 
 ### Feature
 
-```
+```text
 feat(auth): add JWT authentication
 
 - Implement token-based login
@@ -123,7 +124,7 @@ feat(auth): add JWT authentication
 
 ### Bug Fix
 
-```
+```text
 fix(api): prevent crash on null profile data
 
 Add null checks before accessing nested fields.
@@ -131,7 +132,7 @@ Add null checks before accessing nested fields.
 
 ### Refactor
 
-```
+```text
 refactor(db): simplify query construction
 
 - Extract shared query logic
@@ -142,7 +143,7 @@ refactor(db): simplify query construction
 
 ## Multi-file Changes (Staged Only)
 
-```
+```text
 refactor(core): restructure authentication module
 
 - Move logic into service layer
@@ -156,7 +157,7 @@ BREAKING CHANGE: Auth service now requires a config object
 
 ## Breaking Changes
 
-```
+```text
 feat(api)!: change response format
 
 BREAKING CHANGE:
