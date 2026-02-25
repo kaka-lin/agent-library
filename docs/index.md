@@ -36,7 +36,7 @@
 | **VSCode + Copilot** | `AGENTS.md`<br>`.github/copilot-instructions.md`<br>`.github/skills/`<br>`.github/agents/xxx.agent.md`<br>`.agents/skills/` | `~/.copilot/copilot-instructions.md`<br>`.copilot/skills/`<br>`.copilot/agents/xxx.agent.md`<br>`~/.agents/skills/` |
 | **Cursor** | `.cursor/rules/*.mdc` | **Cursor Settings** (Rules for AI UI)<br>`~/.cursorrules` |
 | **Claude Code** | `CLAUDE.md` | `~/.claude/config.json`<br>`~/.claude/CLAUDE.md` |
-| **Antigravity** | `.agent/rules/`<br>`.agent/workflows/`<br>`.agent/skills/` | `~/.gemini/GEMINI.md`<br>`~/.gemini/antigravity/rules/`<br>`~/.gemini/antigravity/workflows/`<br>`~/.gemini/antigravity/skills/` |
+| **Antigravity** | `.agent/rules/`<br>`.agent/workflows/`<br>`.agent/skills/` | `~/.gemini/GEMINI.md`<br>`~/.gemini/antigravity/rules/`<br>`~/.gemini/antigravity/global_workflows/`<br>`~/.gemini/antigravity/skills/` |
 
 ### 解析優先級
 

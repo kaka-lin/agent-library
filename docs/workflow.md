@@ -16,7 +16,7 @@ Antigravity 支援直接放在專案內，或是全域配置：
 
 | 工具 | Workspace (工作區) | Global (全域) |
 | ---- | ----------------- | ------------------ |
-| **Antigravity** | `.agent/workflows/` | `~/.gemini/antigravity/workflows/` |
+| **Antigravity** | `.agent/workflows/` | `~/.gemini/antigravity/global_workflows/` |
 
 > [!NOTE]
 > 建立 Workflow 可以透過編輯器的 GUI：

@@ -26,7 +26,7 @@ Antigravity 支援直接放在專案內，或是全域配置：
 - **Personal Workflows (Global):**
 
     ```text
-    ~/.gemini/antigravity/workflows/
+    ~/.gemini/antigravity/global_workflows/
     ```
 
 - **Project Workflows (Local):**
