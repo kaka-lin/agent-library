@@ -350,6 +350,35 @@ Use sparingly, separated by at least **two spaces** from code.
 timeout = 30  # Seconds; upstream SLA guarantees < 10s response
 ```
 
+### 7.3 Section Headers
+
+For longer scripts or example files, a single-line comment is sufficient to
+separate logical sections. Follow the **Google style** — keep it minimal:
+
+```python
+# Constants
+MAX_RETRY_ATTEMPTS = 3
+DEFAULT_TIMEOUT_SECONDS = 30
+
+
+# Helpers
+def build_url(base: str, path: str) -> str:
+    ...
+
+
+# Main
+def main() -> None:
+    ...
+```
+
+**Guidelines:**
+
+- Use a single `# Section Name` line — no box decorations (`---`, `===`, `###`).
+- The header is a **label** — place it directly above the code it describes,
+  with **no blank line** between the header and the first definition.
+- Two blank lines go **before** the section header (PEP 8 top-level separation).
+- Prefer splitting into separate modules over adding many section headers.
+
 ## 8. Error Handling
 
 ### 8.1 Catch Specific Exceptions
