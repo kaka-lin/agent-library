@@ -6,6 +6,7 @@
 
 ```text
 agent-library/
+├── docs/            # AI Metadata 文件說明
 ├── rules/           # 編碼風格與 Agent 規則
 ├── skills/          # 情境觸發的能力模組
 └── workflows/       # 多步驟流程編排
@@ -13,8 +14,9 @@ agent-library/
 
 | 目錄 | 檔案 | 說明 |
 | ---- | ---- | ---- |
+| `docs/` | `*.md` | 各種 AI Metadata 文件說明與教學（如 `AGENTS.md`, `SKILL.md` 等） |
 | `rules/` | `*.md` | 編碼風格、全域規則（各 Agent 共用或專用） |
-| `skills/` | `SKILL.md` | 情境觸發的能力模組（VS Code Agent Skills） |
+| `skills/` | `SKILL.md` | 情境觸發的能力模組（跨平台 Agent Skills 標準） |
 | `workflows/` | `*.md` | 多步驟流程編排（定義一系列順序執行的任務） |
 
 ## 💡 核心差異：Skill vs Workflow
@@ -23,7 +25,7 @@ agent-library/
 | :--- | :--- | :--- |
 | **本質** | 提供**領域知識**、指導原則、最佳實踐。 | 提供**固定順序**的執行步驟 (SOP)。 |
 | **Agent 的自由度** | **高**。Agent 學會這些原則後，會根據當下情境「靈活運用」來達成任務。 | **低**。Agent 被要求當一個無情的執行機器，必須「嚴格遵守」順序執行。 |
-| **觸發方式** | **隱性 (Implicit)**<br>你用自然語言描述需求，Agent 判斷相關後會**主動**讀取並學習。 | **顯性 (Explicit)**<br>你主動下指令 (Slash commands)，Agent 開始照著步驟執行。 |
+| **觸發方式** | **隱性為主 (Implicit)**<br>Agent 根據任務情境自動判斷並載入；部分工具亦支援 `/skill-name` 手動觸發。 | **顯性 (Explicit)**<br>你主動下指令 (Slash commands)，Agent 開始照著步驟執行。 |
 | **適用場景** | 解決特定領域的**「How (該遵守什麼原則與風格)」** | 完成重複性高的**「What to do next (下一步做什麼操作)」** |
 
 ### 具體情境範例

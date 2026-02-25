@@ -1,7 +1,7 @@
 ---
 name: markdown-code-style
 description: Markdown authoring style — structure, spacing, lists, and formatting conventions
-activation: model_decision
+trigger: model_decision
 ---
 
 # Markdown Code Style & Conventions

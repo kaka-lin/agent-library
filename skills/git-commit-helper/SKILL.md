@@ -17,8 +17,6 @@ This skill is **universal** and designed to work with:
 - CLI-based AI agents
 - Any editor or workflow that can access `git diff --staged`
 
----
-
 ## Scope Assumption
 
 This guide assumes commit messages are written
@@ -31,8 +29,6 @@ scope of the commit description.
 As a result, commit messages focus only on files
 and modifications that appear in the staged diff.
 
----
-
 ## When to Use
 
 Use this skill when:
@@ -41,8 +37,6 @@ Use this skill when:
 - Reviewing **staged** changes before committing
 - Enforcing Conventional Commits
 - Improving long-term Git history quality
-
----
 
 ## Expected Input
 
@@ -58,8 +52,6 @@ The assistant must **ignore**:
 
 If no staged diff is provided, ask for clarification **before** generating a commit message.
 
----
-
 ## Output Format
 
 ```text
@@ -69,8 +61,6 @@ If no staged diff is provided, ask for clarification **before** generating a com
 
 [optional footer]
 ```
-
----
 
 ## Commit Types
 
@@ -84,14 +74,12 @@ If no staged diff is provided, ask for clarification **before** generating a com
 | test     | Add or update tests                  |
 | chore    | Maintenance / tooling / CI           |
 
----
-
 ## Writing Rules
 
 ### Summary Line
 
 - Imperative mood (`add`, `fix`, `remove`)
-- ≤ 50 characters
+- ≤ 72 characters (including `type(scope):`)
 - Capitalized first letter
 - No trailing period
 - Must match **staged changes exactly**
@@ -107,8 +95,6 @@ If no staged diff is provided, ask for clarification **before** generating a com
 
 - Reference issues: `Refs #123`, `Closes #456`
 - Declare breaking changes if applicable
-
----
 
 ## Examples
 
@@ -139,8 +125,6 @@ refactor(db): simplify query construction
 - Reduce duplication
 ```
 
----
-
 ## Multi-file Changes (Staged Only)
 
 ```text
@@ -153,8 +137,6 @@ refactor(core): restructure authentication module
 BREAKING CHANGE: Auth service now requires a config object
 ```
 
----
-
 ## Breaking Changes
 
 ```text
@@ -164,8 +146,6 @@ BREAKING CHANGE:
 Responses now follow JSON:API specification.
 ```
 
----
-
 ## Recommended Workflow
 
 ```bash
@@ -173,8 +153,6 @@ git add -p
 git diff --staged
 git commit -m "type(scope): description"
 ```
-
----
 
 ## Amend Commits
 
@@ -184,17 +162,13 @@ git add forgotten-file
 git commit --amend --no-edit
 ```
 
----
-
 ## Best Practices
 
 - One logical change per commit
-- Commit message must match `git show`
-- If a file is not in `git show`, it must not be mentioned
+- Commit message must match `git diff --staged`
+- If a file is not in `git diff --staged`, it must not be mentioned
 - Prefer small, focused commits
 - Write for future maintainers
-
----
 
 ## Checklist
 
@@ -202,6 +176,6 @@ git commit --amend --no-edit
 - [ ] Correct type
 - [ ] Clear scope
 - [ ] Imperative summary
-- [ ] ≤ 50 characters
+- [ ] ≤ 72 characters
 - [ ] Body explains why
 - [ ] Breaking changes marked

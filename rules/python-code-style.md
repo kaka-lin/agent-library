@@ -1,7 +1,7 @@
 ---
 name: python-code-style
 description: Python code style — linting, formatting, naming conventions, and documentation standards
-activation: model_decision
+trigger: model_decision
 ---
 
 # Python Code Style & Documentation

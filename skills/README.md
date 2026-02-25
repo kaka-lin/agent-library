@@ -28,15 +28,13 @@
 - [1. VS Code Copilot 中的 Agent Skills](#1-vs-code-copilot-中的-agent-skills)
 - [2. Antigravity 中的 Agent Skills](#2-antigravity-中的-agent-skills)
 
----
-
 ## 1. VS Code Copilot 中的 Agent Skills
 
 在 VS Code 中，Agent Skills 的核心概念是 **「自動根據對話情境配對對應的技能」**。除了 VS Code 外，這套標準也可跨平台運行在 GitHub Copilot CLI 與其他相容的 agent 生態系中。
 
 > [!IMPORTANT]
-> VS Code Agent Skills **不是 Slash Commands**。
-> 你不能也無需手動呼叫，只要用自然語言描述需求，Copilot 會根據 `SKILL.md` 的 `description` 自動判斷並載入對應 skill。
+> VS Code Agent Skills 的核心設計是**自動配對**，不需手動呼叫。
+> 只要用自然語言描述需求，Copilot 會根據 `SKILL.md` 的 `description` 自動判斷並載入對應 skill。較新版本亦支援透過 slash command 手動觸發。
 
 ### Agent Skills vs Custom Instructions
 
@@ -88,8 +86,10 @@ chat.useAgentSkills = true
 假設有以下 skill (`.github/skills/git-commit-helper/SKILL.md`)：
 
 ```yaml
+---
 name: git-commit-helper
 description: Generate clear, conventional Git commit messages by analyzing staged Git changes only.
+---
 ```
 
 在 Copilot Chat 中直接輸入自然語言：
@@ -97,8 +97,6 @@ description: Generate clear, conventional Git commit messages by analyzing stage
 
 Copilot 就會自動載入該 skill 執行任務。如果命中率不高，可以在 prompt 明確提及：
 > *"請參考 git-commit-helper 這個 agent skill，幫我產生 commit message。"*
-
----
 
 ## 2. Antigravity 中的 Agent Skills
 
@@ -132,7 +130,7 @@ Antigravity 主要推薦存放於個人全域目錄：
 
 設置好 `git-commit-helper` 的 `SKILL.md`（需包含 YAML 的 `name` 與 `description`）後，如同 Copilot，**你通常不需要手動指定**：
 
-> *"請幫我 commit 目前暫存區的程式碼。"*
+> *"請幫我分析暫存區的變更，並產生一個 commit message。"*
 
 Antigravity 收到任務後：
 
