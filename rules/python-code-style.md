@@ -264,10 +264,10 @@ class UserService:
 
 ### 6.1 Line Length
 
-Target **120 characters**. Break long lines with readability in mind.
+Target **100 characters**. Break long lines with readability in mind.
 
 > **Note:** PEP 8 default is 79 characters and Black/Ruff default is 88.
-> We use 120 as a project convention — it's a practical choice for modern
+> We use 100 as a project convention — it's a practical choice for modern
 > wide displays while still preventing excessively long lines.
 
 ### 6.2 Function Signatures
