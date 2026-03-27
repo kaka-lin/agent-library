@@ -72,7 +72,6 @@ Group imports in three blocks, separated by blank lines, in this order:
 1. Standard library
 2. Third-party packages
 3. Local / project imports
-
 ````
 
 **Incorrect:**
@@ -82,7 +81,6 @@ Group imports in three blocks, separated by blank lines, in this order:
 
 1. Standard library
 2. Third-party packages
-
 ````
 
 - Leave one blank line before and after code blocks and blockquotes.
@@ -91,12 +89,13 @@ Group imports in three blocks, separated by blank lines, in this order:
 **Correct (Nested):**
 
 ````markdown
-- Item
+- Item 1
 
   ```bash
   code
   ```
 
+- Item 2
 ````
 
 **Do not use horizontal rules (`---` or `***`) to divide sections.** Rely purely on heading hierarchies and blank lines for visual separation.
@@ -163,7 +162,7 @@ Choose the list density based on the complexity and purpose of the content.
 
 **Correct (Tight Steps with Nested Space):**
 
-```markdown
+````markdown
 1. First step.
 2. Second step with code:
 
@@ -172,7 +171,7 @@ Choose the list density based on the complexity and purpose of the content.
   ```
 
 3. Third step.
-```
+````
 
 **Correct (Loose List for Detailed Info):**
 
@@ -194,7 +193,7 @@ Always use fenced code blocks (` ``` `) instead of indented code blocks for synt
 
 ```python
 def hello_world():
-  print("Hello, world!")
+    print("Hello, world!")
 ```
 
 **Correct (Nested):**
@@ -202,9 +201,9 @@ def hello_world():
 ````markdown
 1. First step
 
-   ```python
-   print("Indented content")
-   ```
+  ```python
+  print("Indented content")
+  ```
 
 2. Second step
 
