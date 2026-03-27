@@ -10,17 +10,19 @@ Consistent formatting and semantic structure make Markdown documents much easier
 
 **Apply when:** writing, editing, or formatting Markdown (.md) files.
 
+This style guide follows the **[markdownlint](https://github.com/DavidAnson/markdownlint)** rule set as a baseline, with a project-wide preference for 2nd-space indentation and explicit blank lines around code blocks.
+
 ## 1. Automated Tooling
 
-Use standard Markdown linters (e.g., `markdownlint` or `Prettier`) to maintain consistency.
+Use standard Markdown linters and formatters (like `markdownlint` or `Prettier`) to maintain consistency.
 
-### 1.1 Config
+### 1.1 Formatter Configuration (e.g., Prettier)
 
-When configuring a formatter like Prettier, use the following rules to enforce 4-space indentation and disable automatic wrapping that breaks version control diffs.
+When using a formatter, ensure it is configured to use **2 spaces** for indentation.
 
 ```json
 {
-  "tabWidth": 4,
+  "tabWidth": 2,
   "useTabs": false,
   "proseWrap": "never"
 }
@@ -30,55 +32,72 @@ When configuring a formatter like Prettier, use the following rules to enforce 4
 
 ### 2.1 Indentation
 
-Always use **4 spaces** for indentation. Never use tabs.
+Always use **2 spaces** for indentation. Never use tabs.
 
 This rule strictly applies to:
+
 - Nested lists (ordered and unordered)
 - Indented code blocks
 - Multiline blockquotes
 
-**Correct (4 spaces):**
-
-```markdown
-- Item 1
-    - Sub-item A
-    - Sub-item B
-        - Deep sub-item
-```
-
-**Incorrect (2 spaces or Tabs):**
+**Correct (2 spaces):**
 
 ```markdown
 - Item 1
   - Sub-item A
+  - Sub-item B
+    - Deep sub-item
+```
+
+**Incorrect (4 spaces or Tabs):**
+
+```markdown
+- Item 1
+    - Sub-item A
 ```
 
 ### 2.2 Blank Lines
 
 Structure the document visually using blank lines (leaving exactly one empty line).
+
 - Leave one blank line before and after headers (H1-H6).
 - Leave one blank line before and after lists.
-- **Critical:** Always leave a blank line between a regular paragraph and a list. If there is no blank line, some parsers will merge the list into the preceding paragraph.
+- **Critical:** Always leave a blank line between a regular paragraph and a list.
 
 **Correct:**
 
-```markdown
+````markdown
 Group imports in three blocks, separated by blank lines, in this order:
 
 1. Standard library
 2. Third-party packages
 3. Local / project imports
-```
+
+````
 
 **Incorrect:**
 
-```markdown
+````markdown
 Group imports in three blocks, separated by blank lines, in this order:
+
 1. Standard library
 2. Third-party packages
-```
+
+````
 
 - Leave one blank line before and after code blocks and blockquotes.
+- **Critical (Nested):** Even when a code block is nested inside a list item, it must have a blank line before it to ensure correct parsing and visibility.
+
+**Correct (Nested):**
+
+````markdown
+- Item
+
+  ```bash
+  code
+  ```
+
+````
 
 **Do not use horizontal rules (`---` or `***`) to divide sections.** Rely purely on heading hierarchies and blank lines for visual separation.
 
@@ -120,12 +139,12 @@ Use the hyphen `-` as the default marker for unordered lists. Do not mix `*`, `+
 ```markdown
 - First item
 - Second item
-    - Sub-item
+  - Sub-item
 ```
 
 ### 4.2 Ordered Lists
 
-Use `1.` for all items in an ordered list to make reordering easier, letting the Markdown engine handle the numbering, OR number them sequentially if preferred by the project. Consistency is key.
+Use `1.` for all items in an ordered list to make reordering easier, letting the Markdown engine handle the numbering.
 
 **Recommended:**
 
@@ -135,24 +154,65 @@ Use `1.` for all items in an ordered list to make reordering easier, letting the
 3. Third step
 ```
 
+### 4.3 List Density (Tight vs. Loose)
+
+Choose the list density based on the complexity and purpose of the content.
+
+- **Tight Lists (Preferred for Steps)**: No blank lines between items. Use for sequential operational steps (1, 2, 3) or short bullet points. Even if an item contains a nested code block, keep the outer list tight if the items are relatively short.
+- **Loose Lists (For Complex Explanations)**: One blank line between ALL items. Use only when every item consists of multiple paragraphs or very long detailed explanations.
+
+**Correct (Tight Steps with Nested Space):**
+
+```markdown
+1. First step.
+2. Second step with code:
+
+  ```bash
+  command
+  ```
+
+3. Third step.
+```
+
+**Correct (Loose List for Detailed Info):**
+
+```markdown
+- **遇到的問題**：前端 UI 與後端 API 被瀏覽器阻擋。
+
+- **解決方案**：腳本透過函式動態設定白名單。
+
+- **手動設定**：直接在 `.env` 中設定 `OPENCLAW_ALLOWED_ORIGINS`。
+```
+
 ## 5. Code Blocks and Inline Elements
 
 ### 5.1 Fenced Code Blocks
 
-Always use fenced code blocks (` ``` `) instead of indented code blocks for syntax highlighting and readability.
-
-Always specify the language identifier.
+Always use fenced code blocks (` ``` `) instead of indented code blocks for syntax highlighting. Always specify the language identifier.
 
 **Correct:**
 
 ```python
 def hello_world():
-    print("Hello, world!")
+  print("Hello, world!")
 ```
+
+**Correct (Nested):**
+
+````markdown
+1. First step
+
+   ```python
+   print("Indented content")
+   ```
+
+2. Second step
+
+````
 
 **Incorrect:**
 
-```
+```text
 def hello_world():
     print("Hello, world!")
 ```
@@ -162,44 +222,47 @@ def hello_world():
 Use single backticks for inline code, variables, file names, or terminal commands mentioned in prose.
 
 **Example:**
+
 To start the server, run the `npm start` command in your terminal. Ensure that `config.json` is properly set up.
 
 ## 6. Links and Images
 
 ### 6.1 Reference vs. Inline Links
 
-For links that appear multiple times or when dealing with very long URLs that break paragraph readability, prefer **Reference Links** placed at the bottom of the document. For standard, one-off links, use inline links.
+For links that appear multiple times, prefer **Reference Links** placed at the bottom of the document. For one-off links, use inline links.
 
 **Inline Link:**
+
 Read the [official documentation](https://example.com/docs).
 
 **Reference Link:**
+
 Read the [official documentation][docs].
 
 [docs]: https://example.com/docs "Optional Title"
 
 ### 6.2 Images
 
-Always provide descriptive alt text for accessibility and broken-link fallbacks.
+Always provide descriptive alt text for accessibility.
 
 **Example:**
-```markdown
+
+````markdown
 ![Architecture diagram showing the data flow from API to Database](./assets/architecture.png)
-```
+````
 
 ## 7. Emphasis
 
 - Use `**` for **bold** text (strong emphasis).
 - Use `*` for *italic* text (emphasis).
-- Use `_` only when the formatting requires it to avoid escaping issues within specific parsers.
 - Do not mix `**` and `__` for bolding in the same document.
 
 ## 8. Best Practices Checklist
 
-1. **4 Spaces** — Strictly enforce 4 spaces for tabs and list indentation.
-2. **No Horizontal Rules** — Use heading hierarchies (`#`, `##`, `###`) and single blank lines for section separation. Never use `---`.
+1. **2 Spaces** — Strictly enforce 2 spaces for tabs and list indentation.
+2. **No Horizontal Rules** — Use heading hierarchies and single blank lines for section separation.
 3. **One H1 per document** — Serve as the main document title.
-4. **Blank Lines** — Surround headings, lists, and code blocks with a single empty line.
+4. **Blank Lines** — Surround headings, lists, and code blocks (including nested ones) with a single empty line.
 5. **Language Identifiers** — Always tag fenced code blocks (e.g., ` ```python `).
 6. **Consistent Markers** — Stick to `-` for unordered lists.
 7. **Semantic Alt Text** — Always include descriptive alt text for images.
