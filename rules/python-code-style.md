@@ -112,37 +112,34 @@ class HTTPClientFactory:
         ...
 ```
 
-## 3. Import Organization
-
-Group imports in three blocks, separated by blank lines, in this order:
+Group imports in three blocks, separated by a blank line, in this order:
 
 1. **Standard library**
 2. **Third-party packages**
 3. **Local / project imports**
 
-```python
-# 1. Standard library
-import os
-from collections.abc import Callable
-from typing import Any
-
-# 2. Third-party packages
-import httpx
-from pydantic import BaseModel
-from sqlalchemy import Column
-
-# 3. Local imports
-from myproject.models import User
-from myproject.services import UserService
-```
-
 **Rules:**
 
+- **Omit empty blocks**: If a block has no imports, do not leave blank lines or headers for it.
+- **No headers**: Do not use comments like `# 1. Standard library` to label blocks; the grouping should be clear from the content and blank line separation.
 - Always use **absolute imports** (avoid relative imports like `from ..utils`).
 - Let `ruff` handle import sorting automatically (`I` rule enabled).
 - Define `__all__` in modules that serve as public APIs to explicitly control
   exported names. This improves clarity and prevents internal symbols from
   leaking.
+
+```python
+import os
+from collections.abc import Callable
+from typing import Any
+
+import httpx
+from pydantic import BaseModel
+from sqlalchemy import Column
+
+from myproject.models import User
+from myproject.services import UserService
+```
 
 ```python
 # myproject/models/__init__.py
