@@ -142,6 +142,28 @@ Always leave exactly one space between the `#` characters and the heading text.
 ##  1. Introduction
 ```
 
+### 3.3 Semantic Headings vs. Pseudo-headers
+
+Do not use bold text alone to simulate a section header (pseudo-headers). Always use the appropriate heading level (`#`, `##`, `###`) to define the document structure. This ensures that tools (like Table of Contents generators) and readers can correctly navigate the document.
+
+**Correct (Semantic):**
+
+```markdown
+### 撰寫原則
+
+- 規則 1
+- 規則 2
+```
+
+**Incorrect (Pseudo-header):**
+
+```markdown
+**撰寫原則：**
+
+- 規則 1
+- 規則 2
+```
+
 ## 4. Lists
 
 ### 4.1 Unordered Lists
@@ -339,4 +361,5 @@ Follow these core rules in every Markdown file:
 - Keep heading levels in order.
 - Use `-` for unordered lists.
 - Keep ordered-list formatting consistent.
+- Prefer semantic structure (H1-H6) over visual tricks (e.g., bolded pseudo-headers).
 - Prefer semantic structure over visual tricks.
