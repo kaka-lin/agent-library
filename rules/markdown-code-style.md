@@ -32,15 +32,22 @@ When using a formatter, ensure it is configured to use **2 spaces** for indentat
 
 ### 2.1 Indentation
 
-Always use **2 spaces** for indentation. Never use tabs.
+Never use tabs. Use spaces for indentation, with the width determined by list
+type:
 
-This rule strictly applies to:
+- **Unordered lists (`-`):** Use **2 spaces**. The marker `-` is 2 characters
+  wide, so 2 spaces aligns continuation content with the item text.
+- **Ordered lists (`1.`):** Use **4 spaces**. The marker `1.` is 3 characters
+  wide; 4 spaces is the safe convention that works across all CommonMark/GFM
+  parsers.
+
+This rule applies to:
 
 - Nested lists (ordered and unordered)
-- Indented code blocks
+- Continuation content (paragraphs, code blocks) inside list items
 - Multiline blockquotes
 
-**Correct (2 spaces):**
+**Correct (unordered — 2 spaces):**
 
 ```markdown
 - Item 1
@@ -49,11 +56,20 @@ This rule strictly applies to:
     - Deep sub-item
 ```
 
-**Incorrect (4 spaces or tabs):**
+**Correct (ordered — 4 spaces):**
 
 ```markdown
-- Item 1
+1. First item
     - Sub-item A
+    - Sub-item B
+2. Second item
+```
+
+**Incorrect (2 spaces in ordered list):**
+
+```markdown
+1. First item
+  - Sub-item A
 ```
 
 ### 2.2 Blank Lines
@@ -152,7 +168,56 @@ Use a consistent ordered-list style throughout the document. When the numbering 
 3. Third step
 ```
 
-### 4.3 List Density (Tight vs. Loose)
+### 4.3 List Marker Spacing
+
+Always leave exactly **one space** between the list marker (`-` or `1.`) and the
+item text. Never use multiple spaces or tabs for this purpose.
+
+**Correct:**
+
+```markdown
+- Item
+1. Item
+```
+
+**Incorrect:**
+
+```markdown
+-  Item
+1.   Item
+```
+
+### 4.5 Hierarchical Nesting
+
+When organizing complex steps (e.g., in a workflow), use hierarchical nesting to
+group sub-tasks, commands, and details logically.
+
+- **Ordered Level (`1.`):** Use **4-space** indentation for continuation.
+- **Unordered Level (`-`):** Use **2-space** indentation for continuation relative
+  to the start of the item (marker).
+
+**Correct Hierarchical Structure:**
+
+````markdown
+1. Step Title
+    General description of the step.
+
+    - **Sub-task Topic:**
+        Sub-task specific description.
+
+        ```bash
+        # Command belongs to this sub-task
+        command
+        ```
+
+      - Detail 1 about the sub-task
+      - Detail 2 about the sub-task
+
+    - **Next Sub-task:**
+        ...
+````
+
+### 4.6 List Density (Tight vs. Loose)
 
 Choose list density based on the complexity and purpose of the content.
 
@@ -163,11 +228,12 @@ Choose list density based on the complexity and purpose of the content.
 
 ````markdown
 1. First step.
-2. Second step with code:
+2. Second step with sub-tasks:
 
-  ```bash
-  command
-  ```
+    - **Sub-task A:**
+        ```bash
+        cmd
+        ```
 
 3. Third step.
 ````
@@ -200,9 +266,9 @@ def hello_world():
 ````markdown
 1. First step
 
-  ```python
-  print("Indented content")
-  ```
+    ```python
+    print("Indented content")
+    ```
 
 2. Second step
 ````
@@ -266,7 +332,7 @@ Write clearly and directly. Prefer concise wording, consistent terminology, and 
 
 Follow these core rules in every Markdown file:
 
-- Use 2 spaces for indentation.
+- Use 2 spaces for unordered list indentation, 4 spaces for ordered lists.
 - Leave blank lines around headings, lists, code blocks, and blockquotes.
 - Always add a blank line before a nested code block inside a list item.
 - Use fenced code blocks with language identifiers.
