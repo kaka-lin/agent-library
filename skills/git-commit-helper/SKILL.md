@@ -62,6 +62,10 @@ If no staged diff is provided, ask for clarification **before** generating a com
 [optional footer]
 ```
 
+`(<scope>)` is **optional**. Include it when the change has a single clear area
+(module/package/subsystem); omit it for cross-cutting changes or projects
+without meaningful sub-areas.
+
 ## Commit Types
 
 | Type     | Meaning                              |
@@ -83,6 +87,15 @@ If no staged diff is provided, ask for clarification **before** generating a com
 - Capitalized first letter
 - No trailing period
 - Must match **staged changes exactly**
+
+### Scope
+
+- Optional, per the Conventional Commits spec.
+- Include when the staged change maps to one clear area — it lets readers see
+  the blast radius at a glance (e.g. `feat(auth):`, `refactor(db):`).
+- Omit when the change spans multiple areas with no single owner, or the
+  project has no meaningful sub-areas (e.g. `chore: bump dependencies`).
+- Keep scope names consistent within a project; reuse existing ones.
 
 ### Body
 
@@ -174,7 +187,7 @@ git commit --amend --no-edit
 
 - [ ] Only staged files are described
 - [ ] Correct type
-- [ ] Clear scope
+- [ ] Scope included when it adds clarity (optional otherwise)
 - [ ] Imperative summary
 - [ ] ≤ 72 characters
 - [ ] Body explains why
