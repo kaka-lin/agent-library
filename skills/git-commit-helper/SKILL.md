@@ -55,7 +55,7 @@ If no staged diff is provided, ask for clarification **before** generating a com
 ## Output Format
 
 ```text
-<type>(<scope>): <short description>
+<type>[optional scope]: <short description>
 
 [optional body]
 
@@ -77,6 +77,22 @@ without meaningful sub-areas.
 | refactor | Refactor without behavior change     |
 | test     | Add or update tests                  |
 | chore    | Maintenance / tooling / CI           |
+
+### Choosing Between `docs` and Behavioral Types
+
+`docs` applies to documentation *about* code — READMEs, comments, usage guides.
+
+When a file's content *is* the product — prompts, skills, rules, agent
+instructions, behavior-as-config — classify by its behavioral impact instead,
+because editing the file changes what the artifact actually does:
+
+- New capability or output behavior → `feat`
+- Corrected behavior → `fix`
+- Restructure with no behavioral change → `refactor`
+
+For example, editing a skill's examples so it starts producing a new commit
+form is `feat`, not `docs` — the skill's observable output changes, even though
+only Markdown was touched.
 
 ## Writing Rules
 
@@ -111,7 +127,10 @@ without meaningful sub-areas.
 
 ## Examples
 
-### Feature
+Examples come in both forms — with a scope when the change maps to one clear
+area, and without when it does not. Match the form to the change, not habit.
+
+### Feature (with scope — single clear area)
 
 ```text
 feat(auth): add JWT authentication
@@ -121,15 +140,24 @@ feat(auth): add JWT authentication
 - Support refresh tokens
 ```
 
-### Bug Fix
+### Feature (no scope — cross-cutting change)
 
 ```text
-fix(api): prevent crash on null profile data
+feat: make commit scope optional
+
+- Clarify that (scope) is optional per Conventional Commits
+- Show examples in both the scoped and scopeless form
+```
+
+### Bug Fix (no scope)
+
+```text
+fix: prevent crash on null profile data
 
 Add null checks before accessing nested fields.
 ```
 
-### Refactor
+### Refactor (with scope)
 
 ```text
 refactor(db): simplify query construction
@@ -164,7 +192,7 @@ Responses now follow JSON:API specification.
 ```bash
 git add -p
 git diff --staged
-git commit -m "type(scope): description"
+git commit -m "type: description"   # add (scope) only when it adds clarity
 ```
 
 ## Amend Commits
