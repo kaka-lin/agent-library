@@ -336,6 +336,26 @@ Always provide descriptive alt text for accessibility.
 ![Architecture diagram showing the data flow from API to Database](./assets/architecture.png)
 ````
 
+### 6.3 Section Cross-References
+
+Reference another section with an **anchor link** to its heading — never with a section sign (`§`) or a hardcoded section number. Renderers auto-generate an anchor id from each heading (lowercased, spaces become `-`, most punctuation stripped; non-ASCII letters such as CJK are preserved), so `## 3. Data Model` is reachable at `#3-data-model`. Across files, use `[text](other.md#anchor)`.
+
+Anchor links are clickable and survive renumbering. When merely describing a document's own structure, name the sections in prose instead of numbering them — literal numbers rot when sections are reordered.
+
+**Correct:**
+
+````markdown
+See the [data model](#3-data-model) for the schema.
+The first half covers setup; the second half covers the data model.
+````
+
+**Incorrect:**
+
+````markdown
+See §3 for the schema.
+See section 3 for the schema.
+````
+
 ## 7. Emphasis
 
 - Use `**` for **bold** emphasis.
