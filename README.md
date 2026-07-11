@@ -19,6 +19,34 @@ agent-library/
 | `skills/` | `SKILL.md` | 情境觸發的能力模組（跨平台 Agent Skills 標準） |
 | `workflows/` | `*.md` | 多步驟流程編排（定義一系列順序執行的任務） |
 
+## 🚀 部署與同步（`./deploy.sh`）
+
+本 repo 是**單一真源**。改完這裡的內容，跑 `./deploy.sh` 推到各 runtime。兩類資產用**不同機制**，因為物理形狀不同：
+
+| 資產 | 形狀 | 機制 | 為什麼 |
+| ---- | ---- | ---- | ---- |
+| `skills/` | 資料夾（`SKILL.md` + 附檔） | **rsync 複製** | 要與各 runtime 既有技能（如 gstack）**並存**；`--delete` 逐 skill 執行，只動本 repo 擁有的那幾個，碰不到別人的 |
+| `rules/` | 單檔 `.md` | **symlink** | 本 repo **100% 擁有**，直接連過去 → **零漂移**：改內容存檔即生效，免再跑 deploy |
+
+**日常心智模型：**
+
+- 改 rules **內容** → 存檔即生效（symlink 是活的）。
+- **新增** rules 檔、改 skills → 跑 `./deploy.sh`（新規則檔會被自動抓，不用改 `deploy.sh`）。
+
+**同步目標（skills 與 rules 對齊同一組 runtime）：**
+
+- `~/.claude/`
+- `~/.gemini/antigravity/`
+- `~/.gemini/antigravity-ide/`
+- `~/.gemini/antigravity-backup/`
+- `~/.gemini/config/`
+
+### `global-rules.md` 為何不自動同步
+
+`rules/global-rules.md`（各 runtime 共用的全域頭）與 `README.md` **不**進 runtime 的 `rules/` 夾，`deploy.sh` 也不碰它們。原因：各 runtime 的 `~/.claude/CLAUDE.md`、`~/.gemini/GEMINI.md` 是**超集**——除了 global-rules 這段共用核心，還各自帶了 memory 系統、gstack 技能清單等專屬內容。整檔覆蓋會刪掉那些，marker 注入又增加複雜度。
+
+**決定：`global-rules.md` 刻意採「手動整合」。** 改了 `global-rules.md` 後，自己把對應段落貼進各 `CLAUDE.md` / `GEMINI.md`，其餘專屬內容保持不動。
+
 ## 💡 核心差異：Skill vs Workflow
 
 | 比較維度 | 🛠️ Agent Skills (技能) | ⚡ Workflows (操作工作流) |

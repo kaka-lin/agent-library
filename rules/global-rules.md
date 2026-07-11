@@ -17,7 +17,8 @@ Detailed rules are maintained in specific directories. You MUST look for the rul
 
 **Language-to-File Mapping:**
 
-- **Python**: `python-code-style.md`
+- **Python (always)**: `python-code-style.md`
+- **Python (concurrency / background work / service architecture)**: additionally `python-architecture.md`
 - **Markdown**: `markdown-code-style.md`
 
 > [!IMPORTANT]
