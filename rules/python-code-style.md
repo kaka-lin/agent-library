@@ -367,9 +367,36 @@ results = [
 
 ### 7.1 When to Comment
 
-- Explain **why**, not **what** — the code shows what, comments explain intent.
-- Document non-obvious business logic, edge cases, and workarounds.
+Google's Python Style Guide fixes who you are writing for:
+
+> Assume the person reading the code knows Python (though not what you're
+> trying to do) better than you do.
+
+That reader does not need the language explained. They need the intent. Three
+rules follow:
+
+- **Explain why, not what.** Google: "never describe the code." A comment that
+  restates the line above it is noise.
+- **Comment the tricky parts.** Google: "If you're going to have to explain it
+  at the next code review, you should comment it now." This is a test of what
+  you have actually had to explain — not a guess about what a reader might
+  already know. If you caught yourself explaining it in review, in chat, or to
+  yourself while writing it, that is the signal.
 - Add `TODO`, `FIXME`, `HACK` markers with context.
+
+There is **no line limit**. Write the shortest comment that still passes the
+code-review test; Google's own example runs to four lines. Length is never the
+problem — a comment that answers a question nobody asks is noise at one line,
+and a comment that saves a reader ten minutes earns its five.
+
+Design rationale still belongs in a spec document, not in a comment. The test
+separates them cleanly: a reviewer asks "why is this line like this?", never
+"what was the product reasoning behind this feature?"
+
+Write every comment and docstring in **fluent English**, including domain terms
+(世界觀說明 → worldview setting, 圖像關鍵字 → image keywords). Rewrite the whole
+sentence rather than substituting word by word. Non-English text belongs only in
+LLM prompt bodies and UI strings, where the wording itself is the product.
 
 ```python
 # Good — explains why
