@@ -94,7 +94,7 @@ Use **descriptive** names — clarity always beats brevity.
 | Variables           | `snake_case`           | `retry_count`          |
 | Constants           | `SCREAMING_SNAKE_CASE` | `MAX_RETRY_ATTEMPTS`   |
 | Type variables      | `PascalCase`           | `T`, `ResponseT`       |
-| Private members     | `_leading_underscore`  | `_internal_cache`      |
+| Internal members    | `_leading_underscore`  | `_internal_cache`      |
 | Acronyms in classes | Keep uppercase         | `HTTPClientFactory`    |
 
 ```python
@@ -111,6 +111,50 @@ class HTTPClientFactory:
         """Create and return a new HTTP client instance."""
         ...
 ```
+
+### 2.1 Internal Names (Leading Underscore)
+
+Google's Python Style Guide defines **internal** as "internal to a module, or
+protected or private within a class". A single leading underscore therefore
+applies at *both* levels — it is not a class-only convention.
+
+| Type               | Public               | Internal                          |
+| ------------------ | -------------------- | --------------------------------- |
+| Modules            | `lower_with_under`   | `_lower_with_under`               |
+| Classes            | `CapWords`           | `_CapWords`                       |
+| Functions          | `lower_with_under()` | `_lower_with_under()`             |
+| Instance variables | `lower_with_under`   | `_lower_with_under` (protected)   |
+| Methods            | `lower_with_under()` | `_lower_with_under()` (protected) |
+
+Follow these four rules:
+
+- **Single underscore, never dunder.** Google discourages `__name` on instance
+  variables and methods, because name mangling "impacts readability and
+  testability, and isn't *really* private". Prefer `_name`.
+- **Module-level internals are legitimate**, not a smell. Google: "Prepending a
+  single underscore (`_`) has some support for protecting module variables and
+  functions (linters will flag protected member access)."
+- **Unit tests may read them.** Google: "it is okay for unit tests to access
+  protected constants from the modules under test." Do not add a constructor
+  parameter or an injection seam purely so a test can avoid touching `_name`.
+- **Use `_` and `__all__` together** — they do different jobs. `__all__`
+  controls `from module import *`; the underscore signals intent to readers and
+  linters, and does not stop a direct `from module import _name`.
+
+In practice, module-level internals fall into three kinds. This grouping is an
+observation from real codebases rather than a rule from Google, but it is a
+useful check that a name deserves its underscore:
+
+1. **Mutable module state** — locks, caches, registries. These need the
+    underscore most, because outside mutation breaks invariants.
+2. **Constants** — lookup tables and defaults not meant for import.
+3. **Helper functions** — steps of a public function, not part of the surface.
+
+For scale: the standard library's `logging` module defines 21 module-level
+internals (`_lock`, `_handlers`, `_levelToName`, `_checkLevel()`, …) while also
+exporting a public `__all__`. A handful in one module is unremarkable.
+
+## 3. Imports
 
 Group imports in three blocks, separated by a blank line, in this order:
 
